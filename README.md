@@ -1,2 +1,2 @@
-# hitandblow
-hit&amp;blow practice
+# mineSweeper
+mineSweeper practice
