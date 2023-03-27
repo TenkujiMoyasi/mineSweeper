@@ -1,0 +1,69 @@
+body,
+h1,
+p,
+a,
+ul,
+li,
+dt,
+dd {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+body {
+  background: #999;
+}
+
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.game-area {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 50px;
+}
+
+.mine-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 10px;
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+  background: #000;
+  color: #fff;
+}
+
+.panels {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid #000;
+}
+.panels .panel {
+  aspect-ratio: 1/1;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+  background: #ccc;
+  transition: all 0.3s ease;
+}
+.panels .panel .hit {
+  background: red;
+}
+.panels .panel:hover {
+  background: #eee;
+}
+.panels .panel:nth-of-type(3n) {
+  border-right: none;
+}
+.panels .panel:nth-last-of-type(-n+3) {
+  border-bottom: none;
+}/*# sourceMappingURL=style.css.map */
