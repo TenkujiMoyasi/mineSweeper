@@ -20,49 +20,70 @@ body {
 .main {
   max-width: 1000px;
   margin: 0 auto;
+  padding-top: 50px;
 }
 .game-area {
   max-width: 600px;
   margin: 0 auto;
   background: #fff;
-  padding: 50px;
+  padding: 20px;
 }
 
-.mine-count {
+.option-box {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 10px;
-  padding: 10px;
-  width: 30px;
-  height: 30px;
-  background: #000;
-  color: #fff;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 0 10px;
+  .mine-count,
+  .panel-count,
+  .time-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    height: 30px;
+    background: #000;
+    color: #fff;
+  }
 }
+
 
 .panels {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(3,1fr);
-  border: 1px solid #000;
+  gap: 10px;
+  padding: 10px;
   .panel {
     aspect-ratio: 1/1;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #ccc;
     transition: all .3s ease;
-    .hit {
+    &.open {
+      pointer-events: none;
+      background: #fff;
+      border: solid 1px #000;
+      box-sizing: border-box;
+    }
+    &.hit {
       background: red;
     }
     &:hover {
-      background: #eee;
+      opacity: .8;
     }
-    &:nth-of-type(3n) {
-      border-right: none;
-    }
-    &:nth-last-of-type(-n+3) {
-      border-bottom: none;
-    }
+  }
+  &.side3 {
+    $num:3;
+    grid-template-columns: repeat(#{$num},1fr);
+  }
+  &.side5 {
+    $num:5;
+    grid-template-columns: repeat(#{$num},1fr);
+  }
+  &.side9 {
+    $num:9;
+    grid-template-columns: repeat(#{$num},1fr);
   }
 }

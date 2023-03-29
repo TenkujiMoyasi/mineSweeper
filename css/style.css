@@ -20,22 +20,29 @@ body {
 .main {
   max-width: 1000px;
   margin: 0 auto;
+  padding-top: 50px;
 }
 
 .game-area {
   max-width: 600px;
   margin: 0 auto;
   background: #fff;
-  padding: 50px;
+  padding: 20px;
 }
 
-.mine-count {
+.option-box {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 0 10px;
+}
+.option-box .mine-count,
+.option-box .panel-count,
+.option-box .time-count {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 10px;
-  padding: 10px;
-  width: 30px;
+  padding: 10px 20px;
   height: 30px;
   background: #000;
   color: #fff;
@@ -44,26 +51,36 @@ body {
 .panels {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(3, 1fr);
-  border: 1px solid #000;
+  gap: 10px;
+  padding: 10px;
 }
 .panels .panel {
   aspect-ratio: 1/1;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #ccc;
   transition: all 0.3s ease;
 }
-.panels .panel .hit {
+.panels .panel.open {
+  pointer-events: none;
+  background: #fff;
+  border: solid 1px #000;
+  box-sizing: border-box;
+}
+.panels .panel.hit {
   background: red;
 }
 .panels .panel:hover {
-  background: #eee;
+  opacity: 0.8;
 }
-.panels .panel:nth-of-type(3n) {
-  border-right: none;
+.panels.side3 {
+  grid-template-columns: repeat(3, 1fr);
 }
-.panels .panel:nth-last-of-type(-n+3) {
-  border-bottom: none;
+.panels.side5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+.panels.side9 {
+  grid-template-columns: repeat(9, 1fr);
 }/*# sourceMappingURL=style.css.map */
