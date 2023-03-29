@@ -53,6 +53,38 @@ body {
   justify-content: center;
   gap: 10px;
   padding: 10px;
+  &.clear,
+  &.gameover {
+    position: relative;
+    &::after {
+      font-weight: bold;
+      font-size: 50px;
+      letter-spacing: 3px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &.clear {
+    &::after {
+      content: "CLEAR";
+      color: #ff0000;
+      background: rgba($color: #fff, $alpha: .6);
+    }
+  }
+  &.gameover {
+    &::after {
+      content: "GAME OVER";
+      color: #fff;
+      background: rgba($color: #ff0000, $alpha: .6);
+
+    }
+  }
   .panel {
     aspect-ratio: 1/1;
     cursor: pointer;

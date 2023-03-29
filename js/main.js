@@ -27,6 +27,7 @@ function bombPositionSpecify(n) {
   return bombPosition[Math.floor(n / panelSqrt)][n % panelSqrt]
 }
 
+//地雷の配置
 function setBomb(x) {
   for (let i = 0; i < x; i++) {
     let bombNum = Math.floor(Math.random() * panelList.length);
@@ -39,10 +40,13 @@ function setBomb(x) {
   }
 }
 
+//パネルを開く
 function open(x, y) {
   if (bombPosition[x][y] === 1) {
     panelList[x * panelSqrt + y].classList.add('open');
     panelList[x * panelSqrt + y].classList.add('hit');
+    clearTimeout(timeoutId);
+    panels.classList.add('gameover');
   } else {
     let bombCount = 0;
     for (let ix = x - 1; ix <= x + 1; ix++) {
@@ -65,6 +69,13 @@ function open(x, y) {
     panelQuantity--;
     panelCounter.textContent = `PANEL：${panelQuantity}`;
     panelList[x * panelSqrt + y].classList.add('open');
+
+    if(panelQuantity === 0) {
+      clearTimeout(timeoutId);
+      panels.classList.add('clear');
+    }
+
+    //連鎖して開く
     if(bombCount > 0){
       panelList[x * panelSqrt + y].textContent = bombCount;
     } else {
@@ -85,6 +96,7 @@ function open(x, y) {
   }
 }
 
+//ボードの初期化
 function setBoard() {
   bombPosition = Array.from({ length: panelSqrt }, () => Array(panelSqrt).fill(0));
 
