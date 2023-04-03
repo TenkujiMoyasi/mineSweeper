@@ -192,7 +192,11 @@ function setBoard() {
 }
 
 flagButton.addEventListener('click',() => {
-  if (!panels.classList.contains('flag')) {
+  if (panels.classList.contains('flag')) {
+    panels.classList.remove('flag');
+    flagButton.classList.remove('active');
+    scoopButton.classList.add('active');
+  } else {
     panels.classList.add('flag');
     flagButton.classList.add('active');
     scoopButton.classList.remove('active');
