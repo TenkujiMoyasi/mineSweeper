@@ -2,6 +2,7 @@
 const mineCounter = document.getElementById('mine-count');
 const panelCounter = document.getElementById('panel-count');
 const timeCounter = document.getElementById('time-count');
+const restartButton = document.getElementById('restart-button');
 let panels = document.getElementById('panels');
 let panelList = [...document.querySelectorAll('.panel')];
 let panelSqrt = Math.sqrt(panelList.length);
@@ -13,6 +14,7 @@ let firstCount = 0;
 let mineQuantity = 10;
 let panelQuantity = panelList.length - mineQuantity;
 
+//タイマー起動
 function timeCount() {
   const t = new Date(Date.now() - startTime);
   const s = String(t.getSeconds()).padStart(3, "0");
@@ -23,6 +25,7 @@ function timeCount() {
   }, 1000);
 }
 
+//リストのｎ番目を配列上の座標に変換する
 function bombPositionSpecify(n) {
   return bombPosition[Math.floor(n / panelSqrt)][n % panelSqrt]
 }
@@ -31,7 +34,7 @@ function bombPositionSpecify(n) {
 function setBomb(x) {
   for (let i = 0; i < x; i++) {
     let bombNum = Math.floor(Math.random() * panelList.length);
-    console.log(`頭から${bombNum + 1}番目に爆弾`);
+    // console.log(`頭から${bombNum + 1}番目に爆弾`);
     if (bombPositionSpecify(bombNum) === 0) {
       bombPosition[Math.floor(bombNum / panelSqrt)][bombNum % panelSqrt] = +1;
     } else {
@@ -42,12 +45,16 @@ function setBomb(x) {
 
 //パネルを開く
 function open(x, y) {
-  if (bombPosition[x][y] === 1) {
+  if (panelList[x * panelSqrt + y].classList.contains('open')) {
+    console.log('このパネルはすでに開かれている');
+  }
+  else if (bombPosition[x][y] === 1) {
     panelList[x * panelSqrt + y].classList.add('open');
     panelList[x * panelSqrt + y].classList.add('hit');
     clearTimeout(timeoutId);
     panels.classList.add('gameover');
   } else {
+    // console.log('周囲の地雷数カウント');
     let bombCount = 0;
     for (let ix = x - 1; ix <= x + 1; ix++) {
       for (let iy = y - 1; iy <= y + 1; iy++) {
@@ -55,7 +62,7 @@ function open(x, y) {
         // console.log(`ixは${ix}:iyは${iy}`);
         if (ix >= 0 && iy >= 0 && ix < panelSqrt && iy < panelSqrt) {
           if (bombPosition[ix][iy] === 1) {
-            console.log(`ix:${ix}のiy:${iy}に爆弾あり`);
+            // console.log(`ix:${ix}のiy:${iy}に爆弾あり`);
             bombCount++;
           } else {
             // console.log(`ix:${ix}のiy:${iy}に爆弾なし`);
@@ -65,13 +72,18 @@ function open(x, y) {
         }
       }
     }
-    console.log('チェック完了');
+    // console.log('チェック完了');
     panelQuantity--;
     panelCounter.textContent = `PANEL：${panelQuantity}`;
     panelList[x * panelSqrt + y].classList.add('open');
+    // console.log(`残り：x${x}y${y}にopenを付与`);
 
+    // console.log(`残り：${panelQuantity}`);
+
+    //無事にすべてを開ききったのでクリア
     if(panelQuantity === 0) {
       clearTimeout(timeoutId);
+      console.log('クリア')
       panels.classList.add('clear');
     }
 
@@ -87,7 +99,10 @@ function open(x, y) {
         for (let iy = y - 1; iy <= y + 1; iy++) {
           if (ix >= 0 && iy >= 0 && ix < panelSqrt && iy < panelSqrt) {
             if (!panelList[ix * panelSqrt + iy].classList.contains('open')) {
+              // console.log(`次はix:${ix}のiy:${iy}を開く`);
               open(ix, iy);
+            } else {
+              // console.log('このパネルはすでに開かれている');
             }
           }
         }
@@ -97,7 +112,31 @@ function open(x, y) {
 }
 
 //ボードの初期化
+function resetBoard() {
+  clearTimeout(timeoutId);
+  firstCount = 0;
+  panelQuantity = panelList.length - mineQuantity;
+
+  mineCounter.textContent = `MINE：${mineQuantity}`;
+  panelCounter.textContent = `PANEL：${panelQuantity}`;
+  timeCounter.textContent = 'TIME：000s';
+
+  panels.classList.remove('clear');
+  panels.classList.remove('gameover');
+
+  panelList.forEach((li)=> {
+    console.log('hoge');
+    li.textContent = "";
+    li.classList.remove('open');
+    li.classList.remove('hit');
+  });
+}
+
+//ボードのセッティング
 function setBoard() {
+
+  resetBoard();
+
   bombPosition = Array.from({ length: panelSqrt }, () => Array(panelSqrt).fill(0));
 
   panelList.forEach(li => {
@@ -114,13 +153,14 @@ function setBoard() {
         if(mercifulSwitch ===1){
           for (let ix = x - 1; ix <= x + 1; ix++) {
             for (let iy = y - 1; iy <= y + 1; iy++) {
-              console.log(`ixは${ix}:iyは${iy}`);
+              // console.log(`ixは${ix}:iyは${iy}`);
               if (ix >= 0 && iy >= 0 && ix < panelSqrt && iy < panelSqrt) {
                 bombPosition[ix][iy] = -1;
               }
             }
           }
         }
+
         setBomb(mineQuantity);
         mineCounter.textContent = `MINE：${mineQuantity}`;
         panelCounter.textContent = `PANEL：${panelQuantity}`;
@@ -128,15 +168,18 @@ function setBoard() {
         console.log(bombPosition);
       }
 
+          //無事にすべてを開ききったのでクリア
       open(x, y);
-      if(panelQuantity === 0) {
-        console.log('クリア')
-        clearTimeout(timeoutId);
-      }
     })
   });
   console.log(bombPosition);
 }
+
+restartButton.addEventListener('click', () => {
+  setBoard();
+  console.log('restart');
+  console.log(`リセット時点での残りパネル:${panelQuantity}`);
+});
 
 setBoard();
 

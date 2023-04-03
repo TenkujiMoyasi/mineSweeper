@@ -32,8 +32,10 @@ body {
 .option-box {
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
-  padding: 0 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 10px 10px;
+  .restart-button,
   .mine-count,
   .panel-count,
   .time-count {
@@ -44,6 +46,12 @@ body {
     height: 30px;
     background: #000;
     color: #fff;
+    border: 2px solid #000;
+  }
+  .restart-button {
+    background: #999;
+    color: #000;
+    cursor: pointer;
   }
 }
 
@@ -51,8 +59,10 @@ body {
 .panels {
   display: grid;
   justify-content: center;
-  gap: 10px;
-  padding: 10px;
+  // gap: 10px;
+  // padding: 10px;
+  background: url(../img/ai_kanabou_buki.png) center/contain;
+  border: solid 1px #000;
   &.clear,
   &.gameover {
     position: relative;
@@ -93,9 +103,10 @@ body {
     align-items: center;
     background: #ccc;
     transition: all .3s ease;
+    border: solid 1px #000;
     &.open {
       pointer-events: none;
-      background: #fff;
+      background: rgba($color: #fff, $alpha: .8);
       border: solid 1px #000;
       box-sizing: border-box;
     }
@@ -103,7 +114,9 @@ body {
       background: red;
     }
     &:hover {
-      opacity: .8;
+      background: #fff;
+      // opacity: .8;
+      // border: 1px solid red;
     }
   }
   &.side3 {
