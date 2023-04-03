@@ -35,8 +35,10 @@ body {
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 0 10px 10px;
+  padding: 10px;
 }
+.option-box .scoop-button,
+.option-box .flag-button,
 .option-box .restart-button,
 .option-box .mine-count,
 .option-box .panel-count,
@@ -54,6 +56,23 @@ body {
   background: #999;
   color: #000;
   cursor: pointer;
+}
+.option-box.tools {
+  justify-content: center;
+}
+.option-box .scoop-button,
+.option-box .flag-button {
+  font-size: 2em;
+  padding: 20px;
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+  transition: all 0.3s;
+}
+.option-box .scoop-button.active,
+.option-box .flag-button.active {
+  background: #000;
+  color: #fff;
 }
 
 .panels {
@@ -107,8 +126,19 @@ body {
 .panels .panel.hit {
   background: red;
 }
+.panels .panel.flag {
+  background: yellow;
+}
+.panels .panel.flag::before {
+  content: "\f024";
+  font-weight: 900;
+  font-family: "Font Awesome 6 Free";
+}
 .panels .panel:hover {
   background: #fff;
+}
+.panels.flag .panel {
+  cursor: help;
 }
 .panels.side3 {
   grid-template-columns: repeat(3, 1fr);

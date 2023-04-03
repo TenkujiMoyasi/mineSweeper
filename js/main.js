@@ -3,6 +3,8 @@ const mineCounter = document.getElementById('mine-count');
 const panelCounter = document.getElementById('panel-count');
 const timeCounter = document.getElementById('time-count');
 const restartButton = document.getElementById('restart-button');
+const scoopButton = document.getElementById('scoop-button');
+const flagButton = document.getElementById('flag-button');
 let panels = document.getElementById('panels');
 let panelList = [...document.querySelectorAll('.panel')];
 let panelSqrt = Math.sqrt(panelList.length);
@@ -121,6 +123,10 @@ function resetBoard() {
   panelCounter.textContent = `PANEL：${panelQuantity}`;
   timeCounter.textContent = 'TIME：000s';
 
+  
+  flagButton.classList.remove('active');
+  scoopButton.classList.add('active');
+  panels.classList.remove('flag');
   panels.classList.remove('clear');
   panels.classList.remove('gameover');
 
@@ -129,6 +135,7 @@ function resetBoard() {
     li.textContent = "";
     li.classList.remove('open');
     li.classList.remove('hit');
+    li.classList.remove('flag');
   });
 }
 
@@ -168,12 +175,37 @@ function setBoard() {
         console.log(bombPosition);
       }
 
-          //無事にすべてを開ききったのでクリア
-      open(x, y);
+      if (panels.classList.contains('flag')) {
+        if (li.classList.contains('flag')) {
+          li.classList.remove('flag');
+        } else {
+          li.classList.add('flag');
+        }
+      } else {
+        if (!li.classList.contains('flag')) {
+          open(x, y);
+        }
+      }
     })
   });
   console.log(bombPosition);
 }
+
+flagButton.addEventListener('click',() => {
+  if (!panels.classList.contains('flag')) {
+    panels.classList.add('flag');
+    flagButton.classList.add('active');
+    scoopButton.classList.remove('active');
+  }
+})
+
+scoopButton.addEventListener('click',() => {
+  if (panels.classList.contains('flag')) {
+    panels.classList.remove('flag');
+    flagButton.classList.remove('active');
+    scoopButton.classList.add('active');
+  }
+})
 
 restartButton.addEventListener('click', () => {
   setBoard();

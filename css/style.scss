@@ -34,7 +34,9 @@ body {
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 0 10px 10px;
+  padding: 10px;
+  .scoop-button,
+  .flag-button,
   .restart-button,
   .mine-count,
   .panel-count,
@@ -52,6 +54,22 @@ body {
     background: #999;
     color: #000;
     cursor: pointer;
+  }
+  &.tools {
+    justify-content: center;
+  }
+  .scoop-button,
+  .flag-button {
+    font-size: 2em;
+    padding: 20px;
+    cursor: pointer;
+    background: #fff;
+    color: #000;
+    transition: all .3s;
+    &.active {
+      background: #000;
+      color: #fff;
+    }
   }
 }
 
@@ -113,10 +131,23 @@ body {
     &.hit {
       background: red;
     }
+    &.flag {
+      background: yellow;
+      &::before {
+        content: "\f024";
+        font-weight: 900;
+        font-family: "Font Awesome 6 Free";
+      }
+    }
     &:hover {
       background: #fff;
       // opacity: .8;
       // border: 1px solid red;
+    }
+  }
+  &.flag {
+    .panel {
+      cursor: help;
     }
   }
   &.side3 {
