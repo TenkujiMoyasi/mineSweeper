@@ -123,7 +123,8 @@ function resetBoard() {
   panelCounter.textContent = `PANEL：${panelQuantity}`;
   timeCounter.textContent = 'TIME：000s';
 
-  
+  bombPosition = Array.from({ length: panelSqrt }, () => Array(panelSqrt).fill(0));
+
   flagButton.classList.remove('active');
   scoopButton.classList.add('active');
   panels.classList.remove('flag');
@@ -131,7 +132,6 @@ function resetBoard() {
   panels.classList.remove('gameover');
 
   panelList.forEach((li)=> {
-    console.log('hoge');
     li.textContent = "";
     li.classList.remove('open');
     li.classList.remove('hit');
@@ -141,8 +141,6 @@ function resetBoard() {
 
 //ボードのセッティング
 function setBoard() {
-
-  resetBoard();
 
   bombPosition = Array.from({ length: panelSqrt }, () => Array(panelSqrt).fill(0));
 
@@ -212,7 +210,7 @@ scoopButton.addEventListener('click',() => {
 })
 
 restartButton.addEventListener('click', () => {
-  setBoard();
+  resetBoard();
   console.log('restart');
   console.log(`リセット時点での残りパネル:${panelQuantity}`);
 });
