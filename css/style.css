@@ -148,4 +148,7 @@ body {
 }
 .panels.side9 {
   grid-template-columns: repeat(9, 1fr);
+}
+.panels.side16 {
+  grid-template-columns: repeat(16, 1fr);
 }/*# sourceMappingURL=style.css.map */

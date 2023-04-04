@@ -162,4 +162,8 @@ body {
     $num:9;
     grid-template-columns: repeat(#{$num},1fr);
   }
+  &.side16 {
+    $num:16;
+    grid-template-columns: repeat(#{$num},1fr);
+  }
 }
